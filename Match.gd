@@ -35,6 +35,8 @@ func _input(event) -> void:
 			selected_piece = cxy
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				move_options = PieceManager.get_legal_moves(cxy)
+				if Board.get_piece(selected_piece) == Board.PieceType.Reactor and move_options.size() == 0:
+					print('player ', player, 'has lost') # HANDLE WINS
 				Board.set_ui_tiles(move_options, Board.UIType.Highlight)
 				phase = TurnPhase.Moving
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
