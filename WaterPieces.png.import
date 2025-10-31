@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://herinqqlr1gc"
-path="res://.godot/imported/WaterPieces.png-8a59472396fac762e917794863738073.ctex"
+path="res://.godot/imported/WaterPieces.png-988c3ccf75251d8ca70e6d024404a2e9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WaterPieces.png"
-dest_files=["res://.godot/imported/WaterPieces.png-8a59472396fac762e917794863738073.ctex"]
+source_file="res://Textures/WaterPieces.png"
+dest_files=["res://.godot/imported/WaterPieces.png-988c3ccf75251d8ca70e6d024404a2e9.ctex"]
 
 [params]
 

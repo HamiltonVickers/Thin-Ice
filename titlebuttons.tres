@@ -1,0 +1,9 @@
+[gd_resource type="Theme" format=3 uid="uid://u0weufkmr08b"]
+
+[resource]
+RichTextLabel/colors/default_color = Color(0.12549, 0.447059, 1, 1)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/shadow_offset_x = -1
+RichTextLabel/constants/shadow_offset_y = 1
+RichTextLabel/constants/shadow_outline_size = 5
+RichTextLabel/font_sizes/normal_font_size = 75

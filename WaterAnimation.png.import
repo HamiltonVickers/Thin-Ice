@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpfkp4a73ise6"
-path="res://.godot/imported/Lowlight.png-6b7d10939c0a3a912fac512ebf2251b6.ctex"
+uid="uid://bfd38thafjkyv"
+path="res://.godot/imported/WaterAnimation.png-ce2e71a85e6fa0583316ea1bb92c332c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Lowlight.png"
-dest_files=["res://.godot/imported/Lowlight.png-6b7d10939c0a3a912fac512ebf2251b6.ctex"]
+source_file="res://Textures/WaterAnimation.png"
+dest_files=["res://.godot/imported/WaterAnimation.png-ce2e71a85e6fa0583316ea1bb92c332c.ctex"]
 
 [params]
 

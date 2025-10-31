@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cr4xvabb44vmy"
-path="res://.godot/imported/Reactors.png-8ce11003843c88c16ca22a99b8356328.ctex"
+path="res://.godot/imported/Reactors.png-1985b6e2fbf5af1327d14029e511ea1a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Reactors.png"
-dest_files=["res://.godot/imported/Reactors.png-8ce11003843c88c16ca22a99b8356328.ctex"]
+source_file="res://Textures/Reactors.png"
+dest_files=["res://.godot/imported/Reactors.png-1985b6e2fbf5af1327d14029e511ea1a.ctex"]
 
 [params]
 

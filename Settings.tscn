@@ -1,0 +1,157 @@
+[gd_scene load_steps=6 format=3 uid="uid://blerhr7mkeyho"]
+
+[ext_resource type="Script" uid="uid://dldbdh7aftxuy" path="res://Scripts/Settings.gd" id="1_yrknh"]
+[ext_resource type="Theme" uid="uid://u0weufkmr08b" path="res://Themes/titlebuttons.tres" id="2_w1nw0"]
+[ext_resource type="AudioStream" uid="uid://cvul6jf5d3wbd" path="res://Sounds/wind.ogg" id="3_mjqtt"]
+
+[sub_resource type="Theme" id="Theme_sfvul"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blqn1"]
+bg_color = Color(0.266667, 0.266667, 0.266667, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Node2D" type="Node2D"]
+visible = false
+z_index = 1
+script = ExtResource("1_yrknh")
+
+[node name="BackgroundDarken" type="Panel" parent="."]
+modulate = Color(0.231373, 0.231373, 0.231373, 0.839216)
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 1268.0
+offset_bottom = 788.0
+theme = SubResource("Theme_sfvul")
+theme_override_styles/panel = SubResource("StyleBoxFlat_blqn1")
+
+[node name="Title" type="RichTextLabel" parent="."]
+offset_left = 343.0
+offset_top = 22.0
+offset_right = 938.0
+offset_bottom = 202.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = -1
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/normal_font_size = 100
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolume" type="HSlider" parent="."]
+offset_left = 425.0
+offset_top = 268.0
+offset_right = 855.0
+offset_bottom = 301.0
+value = 100.0
+
+[node name="MusicText" type="RichTextLabel" parent="MusicVolume"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = -53.0
+offset_right = 413.0
+offset_bottom = 7.0
+theme_override_font_sizes/normal_font_size = 40
+text = "Music Volume: 100%"
+vertical_alignment = 1
+
+[node name="SfxVolume" type="HSlider" parent="."]
+offset_left = 425.0
+offset_top = 348.0
+offset_right = 855.0
+offset_bottom = 424.0
+value = 100.0
+
+[node name="SFXText" type="RichTextLabel" parent="SfxVolume"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = -27.0
+offset_right = 413.0
+offset_bottom = 33.0
+theme_override_font_sizes/normal_font_size = 40
+text = "SFX Volume: 100%"
+vertical_alignment = 1
+
+[node name="AnimationSpeed" type="MenuButton" parent="."]
+offset_left = 725.0
+offset_top = 430.0
+offset_right = 897.0
+offset_bottom = 493.0
+theme_override_colors/font_hover_color = Color(0.12549, 0.447059, 1, 1)
+theme_override_font_sizes/font_size = 40
+text = "Medium"
+alignment = 0
+item_count = 4
+popup/item_0/text = "Instant"
+popup/item_0/id = 0
+popup/item_1/text = "Fast"
+popup/item_1/id = 1
+popup/item_2/text = "Medium"
+popup/item_2/id = 2
+popup/item_3/text = "Slow"
+popup/item_3/id = 3
+
+[node name="SpeedText" type="RichTextLabel" parent="AnimationSpeed"]
+layout_mode = 0
+offset_left = -350.0
+offset_right = -2.0
+offset_bottom = 60.0
+theme_override_font_sizes/normal_font_size = 40
+text = "Animation Speed:"
+vertical_alignment = 1
+
+[node name="WarnToggle" type="RichTextLabel" parent="."]
+offset_left = 973.0
+offset_top = 533.0
+offset_right = 1044.0
+offset_bottom = 593.0
+theme = ExtResource("2_w1nw0")
+theme_override_font_sizes/normal_font_size = 40
+text = "Yes"
+vertical_alignment = 1
+
+[node name="WarnText" type="RichTextLabel" parent="."]
+offset_left = 239.0
+offset_top = 533.0
+offset_right = 965.0
+offset_bottom = 593.0
+theme_override_font_sizes/normal_font_size = 40
+text = "Warn before forfeiting/exiting match:"
+vertical_alignment = 1
+
+[node name="Save" type="RichTextLabel" parent="."]
+offset_left = 351.0
+offset_top = 687.0
+offset_right = 502.0
+offset_bottom = 776.0
+theme = ExtResource("2_w1nw0")
+theme_override_font_sizes/normal_font_size = 60
+text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Exit" type="RichTextLabel" parent="."]
+offset_left = 777.5
+offset_top = 687.0
+offset_right = 928.5
+offset_bottom = 776.0
+theme = ExtResource("2_w1nw0")
+theme_override_font_sizes/normal_font_size = 60
+text = "Exit
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_mjqtt")
+autoplay = true
+
+[connection signal="value_changed" from="MusicVolume" to="." method="_on_music_volume_value_changed"]
+[connection signal="value_changed" from="SfxVolume" to="." method="_on_sfx_volume_value_changed"]
+[connection signal="focus_exited" from="AnimationSpeed" to="." method="_on_animation_speed_focus_exited"]
+[connection signal="gui_input" from="WarnToggle" to="." method="_on_warn_toggle_gui_input"]
+[connection signal="gui_input" from="Save" to="." method="_on_save_gui_input"]
+[connection signal="gui_input" from="Exit" to="." method="_on_exit_gui_input"]

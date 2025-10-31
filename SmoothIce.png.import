@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1sx6v3vy0sf5"
-path="res://.godot/imported/SmoothIce.png-3861021a18b584d333c33b7c64f79d31.ctex"
+path="res://.godot/imported/SmoothIce.png-5a4cea986bb70aac3b1afe4d602a146e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SmoothIce.png"
-dest_files=["res://.godot/imported/SmoothIce.png-3861021a18b584d333c33b7c64f79d31.ctex"]
+source_file="res://Textures/SmoothIce.png"
+dest_files=["res://.godot/imported/SmoothIce.png-5a4cea986bb70aac3b1afe4d602a146e.ctex"]
 
 [params]
 

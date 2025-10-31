@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpfkp4a73ise6"
-path="res://.godot/imported/Lowlight.png-6b7d10939c0a3a912fac512ebf2251b6.ctex"
+uid="uid://ca5geiu6ko4jv"
+path="res://.godot/imported/Settings.png-1f550c529985db4beb1ab85898d7777d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Lowlight.png"
-dest_files=["res://.godot/imported/Lowlight.png-6b7d10939c0a3a912fac512ebf2251b6.ctex"]
+source_file="res://Textures/Settings.png"
+dest_files=["res://.godot/imported/Settings.png-1f550c529985db4beb1ab85898d7777d.ctex"]
 
 [params]
 
