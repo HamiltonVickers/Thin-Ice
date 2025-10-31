@@ -15,7 +15,7 @@ var default: Color = Color(255, 255, 255)
 
 var SFXVolume = 1
 var MusicVolume = 1
-var AnimationSpeed = 0.5
+var AnimationSpeed = 2
 var ShouldWarn = true
 var path: String = 'user://settings.ice'
 var prev_scene;
@@ -88,13 +88,13 @@ func update_sfx() -> void:
 
 func _on_music_volume_value_changed(v: float) -> void:
 	MusicVolume = v / 100
-	musicplayer.volume_db = MusicVolume * 30 - 30
-	if MusicVolume == 0: musicplayer.volume_db = -100
 	update_music()
 
 func update_music() -> void:
 	musictext.text = "Music Volume: " + str(int(MusicVolume * 100)) + "%"
 	music.set_value_no_signal(MusicVolume * 100) # only matters for initial load
+	musicplayer.volume_db = MusicVolume * 30 - 30
+	if MusicVolume == 0: musicplayer.volume_db = -100
 
 func _on_animation_speed_changed(i: int) -> void:
 	speed.text = ["Instant", "Fast", "Medium", "Slow"][i]
@@ -113,3 +113,6 @@ func _on_exit_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		visible = false
 		prev_scene.visible = true
+
+func _on_music_player_finished() -> void:
+	musicplayer.play()
