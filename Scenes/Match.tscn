@@ -1,0 +1,220 @@
+[gd_scene load_steps=30 format=4 uid="uid://cikmjo3128es5"]
+
+[ext_resource type="Script" uid="uid://dbn7en0chb74s" path="res://Scripts/Match.gd" id="1_qcd6x"]
+[ext_resource type="Script" uid="uid://bbit5pwsj6m78" path="res://Scripts/PieceManager.gd" id="2_tvj8w"]
+[ext_resource type="Script" uid="uid://dedlcojaomkj3" path="res://Scripts/Pieces.gd" id="3_pjnsw"]
+[ext_resource type="Script" uid="uid://dn6ohewgrkabj" path="res://Scripts/Board.gd" id="4_1v4k0"]
+[ext_resource type="Texture2D" uid="uid://bfd38thafjkyv" path="res://Textures/WaterAnimation.png" id="5_clp2v"]
+[ext_resource type="Texture2D" uid="uid://baqsyq2qrlb56" path="res://Textures/Rocks.png" id="6_bw1q4"]
+[ext_resource type="Texture2D" uid="uid://c1yvj7js5l1qo" path="res://Textures/Ice.png" id="7_ihcbr"]
+[ext_resource type="Texture2D" uid="uid://1sx6v3vy0sf5" path="res://Textures/SmoothIce.png" id="8_g644u"]
+[ext_resource type="Texture2D" uid="uid://cr4xvabb44vmy" path="res://Textures/Reactors.png" id="9_52fn1"]
+[ext_resource type="Texture2D" uid="uid://co1ucaahl6lh2" path="res://Textures/FirePieces.png" id="10_eno3s"]
+[ext_resource type="Texture2D" uid="uid://herinqqlr1gc" path="res://Textures/WaterPieces.png" id="11_56ai3"]
+[ext_resource type="Texture2D" uid="uid://cot1bhtpt2gh8" path="res://Textures/Highlight.png" id="12_pnvph"]
+[ext_resource type="Texture2D" uid="uid://cpfkp4a73ise6" path="res://Textures/Lowlight.png" id="13_2kp3t"]
+[ext_resource type="AudioStream" uid="uid://wh84yews1f44" path="res://Sounds/sizzle.ogg" id="14_igbf1"]
+[ext_resource type="Texture2D" uid="uid://dsfm31cbpssaf" path="res://Textures/next.png" id="15_4sqnd"]
+[ext_resource type="Texture2D" uid="uid://ca5geiu6ko4jv" path="res://Textures/Settings.png" id="16_x2u1r"]
+[ext_resource type="Texture2D" uid="uid://b024qycypd42c" path="res://Textures/exit.png" id="17_hch56"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ilqr"]
+texture = ExtResource("5_clp2v")
+texture_region_size = Vector2i(256, 256)
+0:0/animation_columns = 2
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qness"]
+texture = ExtResource("6_bw1q4")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ck5pg"]
+texture = ExtResource("7_ihcbr")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ph5s1"]
+texture = ExtResource("8_g644u")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_qness"]
+tile_size = Vector2i(256, 256)
+sources/3 = SubResource("TileSetAtlasSource_ph5s1")
+sources/2 = SubResource("TileSetAtlasSource_ck5pg")
+sources/1 = SubResource("TileSetAtlasSource_qness")
+sources/0 = SubResource("TileSetAtlasSource_1ilqr")
+tile_proxies/coords_level = [[1, Vector2i(0, 0)], [6, Vector2i(0, 0)], [4, Vector2i(0, 0)], [6, Vector2i(1, 0)], [5, Vector2i(0, 0)], [6, Vector2i(2, 0)], [5, Vector2i(0, 1)], [7, Vector2i(0, 1)], [5, Vector2i(1, 0)], [7, Vector2i(1, 0)], [5, Vector2i(1, 1)], [7, Vector2i(1, 1)], [6, Vector2i(0, 0)], [7, Vector2i(2, 0)], [10, Vector2i(0, 0)], [12, Vector2i(0, 0)], [11, Vector2i(0, 0)], [12, Vector2i(1, 0)]]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e6e4d"]
+texture = ExtResource("9_52fn1")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfv01"]
+texture = ExtResource("10_eno3s")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h8hc7"]
+texture = ExtResource("11_56ai3")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jeyxq"]
+tile_size = Vector2i(256, 256)
+sources/0 = SubResource("TileSetAtlasSource_e6e4d")
+sources/1 = SubResource("TileSetAtlasSource_xfv01")
+sources/2 = SubResource("TileSetAtlasSource_h8hc7")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [2, Vector2i(0, 0)], [1, Vector2i(0, 0)], [2, Vector2i(1, 0)], [2, Vector2i(0, 0)], [4, Vector2i(0, 0)], [3, Vector2i(0, 0)], [5, Vector2i(0, 0)], [4, Vector2i(0, 0)], [5, Vector2i(1, 0)]]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mx5c3"]
+texture = ExtResource("12_pnvph")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mmw6q"]
+texture = ExtResource("13_2kp3t")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_e6e4d"]
+tile_size = Vector2i(256, 256)
+sources/0 = SubResource("TileSetAtlasSource_mx5c3")
+sources/1 = SubResource("TileSetAtlasSource_mmw6q")
+
+[node name="Match" type="Node2D"]
+z_index = -1
+script = ExtResource("1_qcd6x")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_left = -53.0
+offset_top = 408.0
+offset_right = 1377.0
+offset_bottom = 841.0
+color = Color(1.44392e-06, 0.500991, 0.722092, 1)
+
+[node name="PieceManager" type="Node" parent="."]
+script = ExtResource("2_tvj8w")
+
+[node name="Pieces" type="Node" parent="PieceManager"]
+script = ExtResource("3_pjnsw")
+
+[node name="Board" type="Node" parent="PieceManager/Pieces"]
+script = ExtResource("4_1v4k0")
+
+[node name="IceTileMap" type="TileMapLayer" parent="PieceManager/Pieces/Board"]
+scale = Vector2(0.25, 0.25)
+tile_map_data = PackedByteArray("AAAAAAAAAgAAAAAAAAABAAAAAgAAAAAAAAACAAAAAgAAAAAAAAADAAAAAgAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAGAAAAAgAAAAAAAAAHAAAAAgAAAAAAAAAIAAAAAgAAAAAAAAAIAAEAAgAAAAAAAAAHAAEAAgAAAAAAAAAGAAEAAgAAAAAAAAAGAAIAAgAAAAAAAAAFAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAADAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAABAAEAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAADAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAQAAgAAAAAAAAAAAAUAAgAAAAAAAAAAAAYAAgAAAAAAAAABAAYAAgAAAAAAAAACAAYAAgAAAAAAAAADAAYAAgAAAAAAAAAEAAYAAgAAAAAAAAAFAAYAAgAAAAAAAAAGAAYAAgAAAAAAAAAHAAYAAgAAAAAAAAAIAAYAAgAAAAAAAAAIAAUAAgAAAAAAAAAIAAQAAgAAAAAAAAAIAAMAAgAAAAAAAAAIAAIAAgAAAAAAAAAHAAIAAgAAAAAAAAAGAAMAAgAAAAAAAAAHAAMAAgAAAAAAAAAFAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAACAAMAAgAAAAAAAAACAAQAAgAAAAAAAAABAAQAAgAAAAAAAAABAAMAAgAAAAAAAAABAAUAAgAAAAAAAAACAAUAAgAAAAAAAAADAAUAAgAAAAAAAAAEAAUAAgAAAAAAAAAFAAUAAgAAAAAAAAAGAAUAAgAAAAAAAAAHAAUAAgAAAAAAAAAHAAQAAgAAAAAAAAAGAAQAAgAAAAAAAAAFAAQAAgAAAAAAAAAEAAQAAgAAAAAAAAADAAQAAgAAAAAAAAAJAAAAAgAAAAAAAAAKAAAAAgAAAAAAAAALAAAAAgAAAAAAAAAMAAAAAgAAAAAAAAAMAAEAAgAAAAAAAAAMAAIAAgAAAAAAAAAMAAMAAgAAAAAAAAAMAAQAAgAAAAAAAAAMAAUAAgAAAAAAAAAMAAYAAgAAAAAAAAAMAAcAAgAAAAAAAAAMAAgAAgAAAAAAAAAMAAkAAgAAAAAAAAAMAAoAAgAAAAAAAAALAAkAAgAAAAAAAAAKAAoAAgAAAAAAAAALAAoAAgAAAAAAAAAJAAoAAgAAAAAAAAAIAAoAAgAAAAAAAAAHAAoAAgAAAAAAAAAGAAoAAgAAAAAAAAAFAAoAAgAAAAAAAAAEAAoAAgAAAAAAAAADAAoAAgAAAAAAAAACAAoAAgAAAAAAAAABAAoAAgAAAAAAAAAAAAoAAgAAAAAAAAAAAAkAAgAAAAAAAAAAAAgAAgAAAAAAAAAAAAcAAgAAAAAAAAABAAcAAgAAAAAAAAABAAgAAgAAAAAAAAABAAkAAgAAAAAAAAACAAkAAgAAAAAAAAACAAgAAgAAAAAAAAACAAcAAgAAAAAAAAADAAcAAgAAAAAAAAADAAgAAgAAAAAAAAADAAkAAgAAAAAAAAAEAAcAAgAAAAAAAAAEAAgAAgAAAAAAAAAEAAkAAgAAAAAAAAAFAAkAAgAAAAAAAAAFAAgAAgAAAAAAAAAGAAgAAgAAAAAAAAAGAAcAAgAAAAAAAAAGAAkAAgAAAAAAAAAHAAkAAgAAAAAAAAAFAAcAAgAAAAAAAAAIAAkAAgAAAAAAAAAHAAgAAgAAAAAAAAAHAAcAAgAAAAAAAAAIAAcAAgAAAAAAAAAIAAgAAgAAAAAAAAAJAAkAAgAAAAAAAAAJAAIAAgAAAAAAAAAJAAEAAgAAAAAAAAAKAAEAAgAAAAAAAAALAAEAAgAAAAAAAAALAAIAAgAAAAAAAAALAAMAAgAAAAAAAAALAAQAAgAAAAAAAAALAAUAAgAAAAAAAAAKAAUAAgAAAAAAAAAKAAYAAgAAAAAAAAAKAAcAAgAAAAAAAAAKAAgAAgAAAAAAAAALAAgAAgAAAAAAAAALAAcAAgAAAAAAAAALAAYAAgAAAAAAAAAKAAQAAgAAAAAAAAAKAAMAAgAAAAAAAAAKAAIAAgAAAAAAAAAJAAYAAgAAAAAAAAAJAAUAAgAAAAAAAAAJAAQAAgAAAAAAAAAJAAMAAgAAAAAAAAAJAAcAAgAAAAAAAAAKAAkAAgAAAAAAAAAJAAgAAgAAAAAAAAANAAAAAgAAAAAAAAANAAEAAgAAAAAAAAANAAIAAgAAAAAAAAANAAMAAgAAAAAAAAANAAQAAgAAAAAAAAANAAUAAgAAAAAAAAANAAYAAgAAAAAAAAANAAcAAgAAAAAAAAANAAgAAgAAAAAAAAANAAkAAgAAAAAAAAANAAoAAgAAAAAAAAAOAAoAAgAAAAAAAAAPAAoAAgAAAAAAAAAQAAoAAgAAAAAAAAARAAoAAgAAAAAAAAASAAoAAgAAAAAAAAATAAoAAgAAAAAAAAATAAkAAgAAAAAAAAASAAkAAgAAAAAAAAASAAgAAgAAAAAAAAATAAgAAgAAAAAAAAATAAcAAgAAAAAAAAARAAkAAgAAAAAAAAAQAAkAAgAAAAAAAAAPAAkAAgAAAAAAAAAOAAkAAgAAAAAAAAASAAcAAgAAAAAAAAASAAYAAgAAAAAAAAASAAUAAgAAAAAAAAASAAQAAgAAAAAAAAASAAMAAgAAAAAAAAASAAIAAgAAAAAAAAASAAEAAgAAAAAAAAASAAAAAgAAAAAAAAARAAAAAgAAAAAAAAAQAAAAAgAAAAAAAAAQAAEAAgAAAAAAAAAPAAEAAgAAAAAAAAAPAAAAAgAAAAAAAAAOAAAAAgAAAAAAAAAOAAEAAgAAAAAAAAAOAAIAAgAAAAAAAAAOAAMAAgAAAAAAAAAOAAQAAgAAAAAAAAAOAAUAAgAAAAAAAAAOAAYAAgAAAAAAAAAOAAcAAgAAAAAAAAAOAAgAAgAAAAAAAAAPAAgAAgAAAAAAAAAQAAgAAgAAAAAAAAARAAgAAgAAAAAAAAARAAcAAgAAAAAAAAAQAAcAAgAAAAAAAAAPAAcAAgAAAAAAAAAPAAYAAgAAAAAAAAAQAAYAAgAAAAAAAAARAAYAAgAAAAAAAAARAAUAAgAAAAAAAAAQAAUAAgAAAAAAAAAPAAUAAgAAAAAAAAAPAAQAAgAAAAAAAAAQAAQAAgAAAAAAAAARAAQAAgAAAAAAAAARAAMAAgAAAAAAAAAQAAMAAgAAAAAAAAAPAAMAAgAAAAAAAAAPAAIAAgAAAAAAAAAQAAIAAgAAAAAAAAARAAIAAgAAAAAAAAARAAEAAgAAAAAAAAATAAAAAgAAAAAAAAATAAEAAgAAAAAAAAATAAIAAgAAAAAAAAATAAMAAgAAAAAAAAATAAQAAgAAAAAAAAATAAUAAgAAAAAAAAATAAYAAgAAAAAAAAA=")
+tile_set = SubResource("TileSet_qness")
+collision_enabled = false
+
+[node name="PieceTileMap" type="TileMapLayer" parent="PieceManager/Pieces/Board"]
+scale = Vector2(0.25, 0.25)
+tile_set = SubResource("TileSet_jeyxq")
+
+[node name="UITileMap" type="TileMapLayer" parent="PieceManager/Pieces/Board"]
+scale = Vector2(0.25, 0.25)
+tile_set = SubResource("TileSet_e6e4d")
+
+[node name="AnimationMap" type="TileMapLayer" parent="PieceManager/Pieces/Board"]
+scale = Vector2(0.25, 0.25)
+tile_set = SubResource("TileSet_jeyxq")
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="PieceManager/Pieces/Board"]
+stream = ExtResource("14_igbf1")
+
+[node name="NextTurn" type="Button" parent="."]
+offset_left = 24.0
+offset_top = 713.0
+offset_right = 280.0
+offset_bottom = 969.0
+scale = Vector2(0.3, 0.3)
+focus_mode = 0
+flat = true
+
+[node name="NextTurn" type="Sprite2D" parent="NextTurn"]
+texture = ExtResource("15_4sqnd")
+centered = false
+
+[node name="SettingsButton" type="Button" parent="."]
+offset_left = 138.0
+offset_top = 713.0
+offset_right = 394.0
+offset_bottom = 969.0
+scale = Vector2(0.3, 0.3)
+focus_mode = 0
+flat = true
+
+[node name="Cogwheel" type="Sprite2D" parent="SettingsButton"]
+texture = ExtResource("16_x2u1r")
+centered = false
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 252.0
+offset_top = 713.0
+offset_right = 508.0
+offset_bottom = 969.0
+scale = Vector2(0.3, 0.3)
+focus_mode = 0
+flat = true
+
+[node name="Exit" type="Sprite2D" parent="ExitButton"]
+texture = ExtResource("17_hch56")
+centered = false
+
+[node name="TurnLabel" type="RichTextLabel" parent="."]
+offset_left = 360.0
+offset_top = 711.0
+offset_right = 756.0
+offset_bottom = 810.0
+theme_override_font_sizes/normal_font_size = 60
+text = "Black to play"
+horizontal_alignment = 2
+
+[node name="Popup" type="Popup" parent="."]
+title = "Warning!"
+initial_position = 2
+size = Vector2i(640, 130)
+borderless = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Popup"]
+offset_top = 11.0
+offset_right = 640.0
+offset_bottom = 46.0
+text = "You have not yet moved your reactor. Are you sure you want to forfeit?"
+horizontal_alignment = 1
+
+[node name="YesButton" type="Button" parent="Popup"]
+offset_left = 335.0
+offset_top = 50.0
+offset_right = 630.0
+offset_bottom = 114.0
+text = "Yes
+"
+
+[node name="NoButton" type="Button" parent="Popup"]
+offset_left = 15.0
+offset_top = 49.0
+offset_right = 310.0
+offset_bottom = 113.0
+text = "No"
+
+[connection signal="pressed" from="NextTurn" to="." method="_on_next_turn_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="focus_exited" from="Popup" to="." method="_on_popup_focus_exited"]
+[connection signal="pressed" from="Popup/YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="Popup/NoButton" to="." method="_on_no_button_pressed"]
