@@ -16,6 +16,7 @@ var AnimationSpeed = 2
 var ShouldWarn = true
 var path: String = 'user://settings.ice'
 var prev_scene;
+var online: bool = false;
 
 func _ready() -> void:
 	load_settings()

@@ -9,40 +9,45 @@ extends Node2D
 @onready var no := $Popup/NoButton
 @onready var popuptext := $Popup/RichTextLabel
 @onready var turnlabel := $TurnLabel
-@onready var music := $MusicPlayer
 
 enum TurnPhase { Selecting, Moving, Acting }
 var selected_piece: Vector2i = Vector2i(-1, -1)
-var move_options: Array = []
-var illegal_actions: Array = []
+var legal_moves: Array = []
+var legal_actions: Array = []
 var phase: TurnPhase = TurnPhase.Selecting
 var player: bool = 0
 var has_moved_reactor: bool = 0
 var used_pieces: Array[Vector2i] = []
-var online: bool = false
+var connected: bool = false
 
 func _ready() -> void:
-	if multiplayer.is_server(): # this should be called is_not_client
+	if (not Settings.online) or (multiplayer.is_server()):
 		Board.set_rocks(Board.rocks)
-		multiplayer.peer_connected.connect(func(i): online = true; rpc("sync_rocks", Board.rocks))
-		multiplayer.peer_disconnected.connect(func(i): win(false))
-	else: 
-		online = true
-		multiplayer.server_disconnected.connect(func(i): win(true))
+		multiplayer.peer_connected.connect(func(_i): 
+			connected = true
+			if Settings.online: rpc("sync_rocks", Board.rocks)
+		)
+		multiplayer.peer_disconnected.connect(func(_i): win(false))
+	else:
+		connected = true
+		multiplayer.server_disconnected.connect(func(_i): win(true))
 
 func _process(_delta) -> void:
 	var cxy = Vector2i(vp.get_mouse_position() / 64)
 	
 	if phase == TurnPhase.Acting:
-		if cxy in illegal_actions:
-			Board.set_ui_tiles([cxy], Board.UIType.Lowlight)
-		else:
+		if (cxy.y >= Board.height or cxy.x >= Board.width): 
+			Board.set_ui_tiles([cxy], -1)
+		elif cxy in legal_actions:
 			Board.set_ui_tiles([cxy], Board.UIType.Highlight)
+		else:
+			Board.set_ui_tiles([cxy], Board.UIType.Lowlight)
 
 func _input(event) -> void:
 	if Settings.visible: return # don't read input while settings is open
 	if not (event is InputEventMouseButton and event.pressed and event.button_index <= 2): return # only process mouse clicks from here
-	if online and multiplayer.is_server() == player: return # only process input on this client's turn
+	if Settings.online and multiplayer.is_server() == player: return # only process input on this client's turn
+	if Settings.online and not connected: return # only allow moves after the opponent has joined
 	
 	var cxy = Vector2i(vp.get_mouse_position() / 64)
 	match phase:
@@ -53,32 +58,32 @@ func _input(event) -> void:
 			
 			selected_piece = cxy
 			if event.button_index == MOUSE_BUTTON_LEFT:
-				move_options = PieceManager.get_legal_moves(cxy)
-				Board.set_ui_tiles(move_options, Board.UIType.Highlight)
+				legal_moves = PieceManager.get_legal_moves(cxy)
+				Board.set_ui_tiles(legal_moves, Board.UIType.Highlight)
 				phase = TurnPhase.Moving
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
 				if Board.get_piece(selected_piece) == Board.PieceType.Reactor: return
-				illegal_actions = PieceManager.get_illegal_actions(cxy)
+				legal_actions = PieceManager.get_legal_actions(cxy)
 				phase = TurnPhase.Acting
 		TurnPhase.Moving:
-			if cxy in move_options:
+			if cxy in legal_moves:
 				used_pieces.push_back(cxy)
 				if Board.get_piece(selected_piece) == Board.PieceType.Reactor: 
 					has_moved_reactor = true
 				do_move(selected_piece, cxy)
 			phase = TurnPhase.Selecting
-			move_options = []
-			Board.set_ui_tiles(move_options, Board.UIType.Highlight)
+			legal_moves = []
+			Board.set_ui_tiles(legal_moves, Board.UIType.Highlight)
 		TurnPhase.Acting:
-			if cxy not in illegal_actions:
+			if cxy in legal_actions:
 				used_pieces.push_back(selected_piece)
 				do_act(selected_piece, cxy)
 			phase = TurnPhase.Selecting
-			illegal_actions = []
+			legal_actions = []
 			Board.set_ui_tiles([], -1)
 
 func _on_next_turn_pressed() -> void:
-	if online and player == multiplayer.is_server(): return
+	if Settings.online and player == multiplayer.is_server(): return
 	if has_moved_reactor:
 		do_progress_turn()
 		return
@@ -90,8 +95,10 @@ func _on_next_turn_pressed() -> void:
 	do_win(!player)
 	
 func end_game():
-	if online: rpc('win', multiplayer.is_server())
+	if Settings.online: rpc('win', multiplayer.is_server())
 	get_tree().change_scene_to_file("res://Scenes/Title.tscn")
+
+# rpc targets and callers (unfortunately have to be in this scope)
 
 @rpc('any_peer')
 func sync_rocks(rocks):
@@ -107,7 +114,7 @@ func win(player):
 	popup.popup_hide.connect(end_game)
 
 func do_win(player):
-	if online: rpc('win', player)
+	if Settings.online: rpc('win', player)
 	win(player)
 
 @rpc('any_peer')
@@ -119,27 +126,26 @@ func progress_turn() -> void:
 	Board.radiate()
 
 func do_progress_turn() -> void:
+	if Settings.online: rpc('progress_turn')
 	progress_turn()
-	if online: rpc('progress_turn')
 
-# assumes move is legal
 @rpc('any_peer')
 func move(from, to):
 	PieceManager.move_piece(from, to)
 
-# ditto above
+func do_move(from, to):
+	if Settings.online: rpc('move', from, to)
+	move(from, to)
+
 @rpc('any_peer')
 func act(from, to):
 	PieceManager.act_piece(from, to)
 
-# universal (local or online) move method
-func do_move(from, to):
-	move(from, to)
-	if online: rpc('move', from, to)
-
 func do_act(from, to):
+	if Settings.online: rpc('act', from, to)
 	act(from, to)
-	if online: rpc('act', from, to)
+
+#signal listeners
 
 func _on_settings_button_pressed() -> void:
 	Settings.visible = true

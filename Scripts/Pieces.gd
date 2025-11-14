@@ -25,7 +25,7 @@ func get_legal_moves_default(cxy: Vector2i) -> Array:
 		moves.push_back(nxy)
 	return moves
 
-func get_illegal_actions_default(cxy: Vector2i) -> Array:
+func get_illegal_actions_default(_cxy: Vector2i) -> Array:
 	var illegal_actions := []
 	for x in range(Board.width):
 		for y in range(Board.height):
@@ -33,12 +33,12 @@ func get_illegal_actions_default(cxy: Vector2i) -> Array:
 			if !Board.is_free(v): illegal_actions.append(v)
 	return illegal_actions
 
-func move_piece_default(from: Vector2i, to: Vector2i, callback: Callable = func(from, to):) -> void:
+func move_piece_default(from: Vector2i, to: Vector2i, callback: Callable = func(_from, _to):) -> void:
 	var dir: Vector2i = (to - from).sign()
 	
 	if Board.is_frozen(to): # push frozen piece
 		while Board.is_free(to + dir):
-			await Board.animate_move(to, to + dir, func(from, to): Board.set_ice(from, Board.IceType.SmoothIce))
+			await Board.animate_move(to, to + dir, func(from, _to): Board.set_ice(from, Board.IceType.SmoothIce))
 			to += dir
 	else: # normal movement
 		while from != to:
@@ -48,20 +48,20 @@ func move_piece_default(from: Vector2i, to: Vector2i, callback: Callable = func(
 
 #REACTOR
 func reactor_move(from, to):
-	move_piece_default(from, to, func(from, to): Board.set_ice(from, Board.IceType.Water))
+	move_piece_default(from, to, func(from, _to): Board.set_ice(from, Board.IceType.Water))
 
 
 # FIRE
-func fire_illegal_actions(from) -> Array:
-	var illegal_actions := []
+func fire_legal_actions(from) -> Array:
+	var legal_actions := []
 	for x in range(Board.width):
 		for y in range(Board.height):
 			var v = Vector2i(x, y)
 			if Board.get_piece(v) == -1:
-				if !Board.is_free(v): illegal_actions.append(v)
+				if Board.is_free(v): legal_actions.append(v)
 			else:
-				if !(Board.is_frozen(v) and Board.mhd(from, v) <= 2): illegal_actions.append(v)
-	return illegal_actions
+				if Board.is_frozen(v) and Board.mhd(from, v) <= 2: legal_actions.append(v)
+	return legal_actions
 
 func fire_act(_from, to):
 	if Board.get_piece(to) != -1:
@@ -76,16 +76,20 @@ func fire_act(_from, to):
 
 
 # WATER
-func water_illegal_actions(from) -> Array:
-	var illegal_actions := []
+func water_legal_actions(from) -> Array:
+	var legal_actions := []
 	for x in range(Board.width):
 		for y in range(Board.height):
 			var v = Vector2i(x, y)
 			if Board.get_piece(v) == -1:
-				if !Board.get_ice(v) == Board.IceType.Ice: illegal_actions.append(v)
+				if Board.get_ice(v) == Board.IceType.Ice: legal_actions.append(v)
 			else:
-				if Board.is_frozen(v) or !(Board.mhd(from, v) <= 2): illegal_actions.append(v)
-	return illegal_actions
+				if (
+					!Board.is_frozen(v) and 
+					(Board.mhd(from, v) <= 2) and
+					Board.get_piece(v) != Board.PieceType.Reactor
+					): legal_actions.append(v)
+	return legal_actions
 
 func water_act(_from, to):
 	if Board.get_piece(to) != -1:

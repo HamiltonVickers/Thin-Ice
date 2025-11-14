@@ -19,7 +19,10 @@ func _ready() -> void:
 		b.mouse_exited.connect(_on_mouse_exited.bind(b))
 		b.mouse_entered.connect(_on_mouse_entered.bind(b))
 	
-	multiplayer.connected_to_server.connect(get_tree().change_scene_to_packed.bind(Match))
+	multiplayer.connected_to_server.connect(func():
+		Settings.online = true
+		get_tree().change_scene_to_packed(Match)
+	)
 
 func _on_mouse_exited(element) -> void:
 	element.add_theme_color_override("default_color", default)
@@ -29,6 +32,7 @@ func _on_mouse_entered(element) -> void:
 
 func _on_new_match_gui_input(event: InputEvent) -> void:
 	if _is_mouse_click(event):
+		Settings.online = false
 		get_tree().change_scene_to_packed(Match)
 
 func _on_online_match_gui_input(event: InputEvent) -> void:
@@ -47,13 +51,14 @@ func _on_exit_gui_input(event: InputEvent) -> void:
 
 func _on_host_pressed() -> void:
 	var peer = ENetMultiplayerPeer.new()
-	peer.create_server(1317, 2)
+	peer.create_server(1317, 1)
 	multiplayer.multiplayer_peer = peer
+	Settings.online = true
 	get_tree().change_scene_to_packed(Match)
 
 func _on_join_pressed() -> void:
 	var peer = ENetMultiplayerPeer.new()
-	var r = peer.create_client(ip.text, 1317)
+	peer.create_client(ip.text, 1317)
 	multiplayer.multiplayer_peer = peer
 
 func _on_online_popup_focus_exited() -> void:
